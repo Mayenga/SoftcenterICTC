@@ -86,7 +86,7 @@
                     <li class="active"><a href="/">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact-S</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     <a href="register" class="btn btn-primary ml-3 px-3 py-2 text-white btn-sm">Register</a>
                     <a href="login" class="btn btn-primary ml-3 px-3 py-2 text-white btn-sm">Sign In</a>
                 </ul>
