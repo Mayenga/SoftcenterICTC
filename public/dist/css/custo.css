@@ -1,0 +1,32 @@
+.custo > a  {
+    color: darkorange !important
+  }
+  .info-box > span {
+    background: #56CCF2;  /* fallback for old browsers */
+    color: white !important;
+    background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */   
+  }
+  .custo-scroll::-webkit-scrollbar{
+    display: none
+  }
+  .custo-scroll{
+    -ms-overflow-style: none;
+    overflow-x: auto; 
+    overflow-y: auto;
+  }
+
+  .blink {
+    animation: blink-animation 1.5s steps(2, start) infinite;
+    -webkit-animation: blink-animation 1.5s steps(2, start) infinite;
+  }
+  @keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+  @-webkit-keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
