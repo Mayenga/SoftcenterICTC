@@ -56,7 +56,7 @@
             <!-- /.social-auth-links -->
 
             <p class="mb-1">
-              <a href="forgot-password">Forgot password</a>
+              <a href="forgot_password">Forgot password</a>
             </p>
           </div>
           <!-- /.login-card-body -->

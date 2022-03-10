@@ -36,9 +36,9 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
-            'port' => env('MAIL_PORT', 465),
-            'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
@@ -57,10 +57,7 @@ return [
             'transport' => 'postmark',
         ],
 
-        'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => '/usr/sbin/sendmail -bs',
-        ],
+        'sendmail' => '/usr/sbin/sendmail -bs',
 
         'log' => [
             'transport' => 'log',
@@ -84,8 +81,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'SoftCenter'),
-        'name' => env('MAIL_FROM_NAME', 'SoftCenter'),
+        'address' => env('MAIL_FROM_ADDRESS', 'clausevee@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Softcenter'),
     ],
 
     /*
@@ -101,9 +98,11 @@ return [
 
     'markdown' => [
         'theme' => 'default',
-
+    
         'paths' => [
             resource_path('views/vendor/mail'),
         ],
     ],
+    
+    'log_channel' => env('MAIL_LOG_CHANNEL'),
 ];

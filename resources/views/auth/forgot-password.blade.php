@@ -14,7 +14,14 @@
 
                 <!-- Validation Errors -->
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                <form method="POST" action="{{ route('password.email') }}">
+
+                @if (Session::has('message'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('message') }}
+                    </div>
+                @endif
+  
+                <form method="POST" action="{{ route('forget.password.post') }}">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" name="email" placeholder="Email" required autofocus>

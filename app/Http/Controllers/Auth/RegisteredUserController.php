@@ -54,7 +54,7 @@ class RegisteredUserController extends Controller
                 } catch (Exception $error) {
                     $output =  response()->json(['errors' => $error->getMessage() ]);
                 }
-        }
+        } 
         return  $output;
     }
 
@@ -172,22 +172,22 @@ class RegisteredUserController extends Controller
                 ->symbols()
                 ->uncompromised(),],
         );
-
         try {
             $code = Crypt::decrypt($request->code);
         } catch (Exception $err) {
             return response()->json(['errors' => 'Invalid code, '.$err->getMessage()]);
         }
-
         $error = Validator::make($request->all(), $rules);
         if ($request->verification_code == $code) {
             if ($error->fails()) {
                 return response()->json(['errors' => $error->errors()->all()]);
             } else {
+                $profile = "sdjfgioshjlkfgsdjkjflsdflk";
                 $user = User::create([
                     'name' => $request->name,
                     'phone' => $request->phone,
                     'email' => $request->your_email,
+                    'profile_image' => $profile,
                     'verification_code' => sha1(rand(0,100000)),
                     'password' => Hash::make($request->password),
                 ]);
@@ -244,7 +244,7 @@ class RegisteredUserController extends Controller
                 }
             }
         }else{
-            return response()->json(['errors' => "Email verification code !!"]);
+            return response()->json(['errors' => "Email verification code is Invalid!!"]);
         }
 
     }

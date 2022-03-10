@@ -16,14 +16,7 @@ class MailController extends Controller
             'code' => Crypt::decrypt($code),
             'name' => $name
         ];
-        // Log::channel('dev')->info('MailController::sendSingupEmail ');
-        // Log::channel('dev')->info($data);
         Mail::to($email)->send(new EmailVerificationCode($data));
-        // if( count(Mail::failures()) > 0 ) {
-        //     return false;
-        // }
-
-        // return true;
     }
     public static function sendEmailUserpassword($name, $email,$password){
         $data = [

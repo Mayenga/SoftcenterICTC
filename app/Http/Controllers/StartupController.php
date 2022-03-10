@@ -80,6 +80,7 @@ class StartupController extends Controller
                 }
                 if ($request->stake_holders_details_id == "Not listed") {
                     $stakeholder_name = $request->stakeholder_name;
+                    $shdid = null;
                 }
                 $startup = StartupProduct::where('id',$request->id)->update([
                     'users_id' => Auth::user()->id,
@@ -91,12 +92,12 @@ class StartupController extends Controller
                     'web_url' => $request->web_url,
                     'business_model' => $request->business_model,
                     'business_model_desc' => $request->business_model_desc,
-                    'finacial_stage' => $request->finacial_stage,
+                    'finacial_stage' => $request->finacial_stage, 
                     'product_stage' => $request->product_stage,
                     'product_cat' => $request->product_cat,
                     'hasStakeholder' => $request->hasStakeholder,
                     'stakeholder_name' => $request->stakeholder_name,
-                    'stake_holders_details_id' => $request->stake_holders_details_id,
+                    'stake_holders_details_id' => $shdid,
                     'ownership' => $request->ownership,
                     'isRegistered' => $request->isRegistered,
                     'est_year' => $request->est_year,
@@ -126,6 +127,7 @@ class StartupController extends Controller
                 $stakeholder_name = null;
                 if ($request->stake_holders_details_id == "Not listed") {
                     $stakeholder_name = $request->stakeholder_name;
+                    $shdid = null;
                 }
                 $file_name = null;
                 if ($request->file_name != "") {
@@ -149,7 +151,7 @@ class StartupController extends Controller
                     'product_cat' => $request->product_cat,
                     'hasStakeholder' => $request->hasStakeholder,
                     'stakeholder_name' => $stakeholder_name,
-                    'stake_holders_details_id' => $request->stake_holders_details_id,
+                    'stake_holders_details_id' => $shdid,
                     'ownership' => $request->ownership,
                     'isRegistered' => $request->isRegistered,
                     'focus_sectors_id' => $request->focus_sectors_id,

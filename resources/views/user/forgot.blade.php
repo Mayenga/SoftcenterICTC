@@ -33,7 +33,16 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
 
-                <form action="send_password" method="post">
+                <form action="{{ url('/forgot_password') }}" method="POST">
+                    @csrf
+
+                    @if(session('error'))  
+                        {{ session('error') }}
+                    @endif
+
+                    @if(session('success')) 
+                        {{ session('success') }}
+                    @endif
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
                         <div class="input-group-append">

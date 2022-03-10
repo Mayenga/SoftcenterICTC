@@ -264,20 +264,20 @@
                 if (isEmail(email) && isName(name)) {
                     $('.sendVerificationCode').html('<small><i>sending...</i></small>');
                     $.post("sendVerificationCode", {
-                            email: email,name:name
-                        })
-                        .done(function(data) {
-                            if (data.errors) {
-                                toastr.error(data.errors);
-                                $('.sendVerificationCode').html('try again');
-                            }
-                            if (data.success) {
-                                toastr.success(data.success);
-                                $("#user_email_hold").val(email);
-                                $("#user_code_hold").val(data.code);
-                                $('.sendVerificationCode').html('resend code');
-                            }
-                        });
+                        email: email,name:name
+                    })
+                    .done(function(data) {
+                        if (data.errors) {
+                            toastr.error(data.errors);
+                            $('.sendVerificationCode').html('try again');
+                        }
+                        if (data.success) {
+                            toastr.success(data.success);
+                            $("#user_email_hold").val(email);
+                            $("#user_code_hold").val(data.code);
+                            $('.sendVerificationCode').html('resend code');
+                        }
+                    });
                 } else {
                     toastr.error("Please enter a correct email format  and your full name");
                 }

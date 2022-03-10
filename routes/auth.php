@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -12,12 +11,9 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SuperController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/register', [RegisteredUserController::class, 'create'])
-                ->middleware('guest')
-                ->name('register');
+Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest');
+Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
 
 Route::get('/email_verification', [RegisteredUserController::class, 'email_verification'])
                 ->middleware('guest')
@@ -35,19 +31,10 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest');
 
-// Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
-//                 ->middleware('guest')
-//                 ->name('password.request');
+Route::get('/forgot_password', [SuperController::class, 'forgot_password']); 
+Route::post('/forgot_password', [SuperController::class, 'forgot_password_function']);
+Route::get('/forgot_password_newpasswordlink/{id}', [SuperController::class, 'forgot_password_newpasswordlink']);
 
-// Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-//                 ->middleware('guest')
-//                 ->name('password.email');
-Route::get('/forgot-password', [SuperController::class, 'forgot_password'])
-                ->middleware('guest')
-                ->name('forgot-password');
-Route::post('/send_password', [SuperController::class, 'send_password'])
-                ->middleware('guest')
-                ->name('send_password');
 
 Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
                 ->middleware('guest')

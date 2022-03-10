@@ -16,8 +16,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Str;
+
+use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use Cartalyst\Sentinel\Laravel\Facades\Reminder;
+use Illuminate\Support\Facades\DB;
 
 class SuperController extends Controller
 {
@@ -33,8 +38,82 @@ class SuperController extends Controller
         $this->attached_filePath = 'public/uploaded/ads/attachment/';
     }
 
-    protected function forgot_password(){
+    public function send_password(Request $request){
+        // Password::sendResetLink($request->email);
+
+        // return $this->respondWithMessage(msg: "Reset Password Link sent on your email");
+        $user = User::whereEmail($request->email)->first();
+        if($user == null){
+            return redirect()->back()->with(['error' => 'Email does not exast']);
+        }else{
+            return $request->email;
+        }
+        
+        // $user = Sentinel::findById($user_id);
+        
+        // $reminder = Reminder::exists($user) ? : Reminder::create($user);
+        
+        // $this->sendEmail($user, $reminder->code);
+        // return "went here";
+        // return redirect()->back()->with(['success' => 'Reset code sent to your email.']);  
+    }
+
+    // public function sendEmail($user, $code){
+    //     Mail::send(
+    //         'mail.forgot',
+    //         ['user' => $user, 'code' => $code],
+    //         function($message) use ($user){
+    //             $message->to($user->email);
+    //             $message->subject("$user->name, resert your passoword.");
+    //         }
+    //     );
+    // }
+
+    public function forgot_password(){
         return view('user.forgot');
+    }
+    public function forgot_password_function(Request $request){
+        $user = User::whereEmail($request->email)->first();
+
+        if($user == null){
+            return redirect()->back()->with(['error' => 'Email not exists']);
+        }
+        $email = $request->email;
+        $user = DB::select('SELECT * FROM users WHERE email = ?', [$email]);
+        $code = $user[0]->id;
+        $this->sendEmail($user, $code);
+
+        return redirect()->back()->with(['success' => 'Reset code sent to your email']);
+    }
+
+    public function sendEmail($user, $code){
+        Mail::send(
+            'mail.forgot',
+            ['user' => $user, 'code' => $code],
+            function($message) use ($user){
+                $message->to($user[0]->email);
+                $name = $user[0]->name;
+                $message->subject("$name, reset your password");
+            }
+        );
+    }
+
+    public function forgot_password_newpasswordlink(){
+        function generateRandomString($length = 10) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
+        }
+        $new_password = generateRandomString();
+        $id = request()->id;
+        $password = Hash::make($new_password);
+        DB::table('users')->where('id',$id)->update(array('password'=>$password));
+        // User::find(auth()->user()->id)->update(['password'=> Hash::make($new_password)]);
+        return view('user.pass', ['password' => $new_password]);
     }
 
     protected function delete_users(Request $request){
@@ -340,4 +419,5 @@ class SuperController extends Controller
           return "Sorry something went wrong !!" .$err;
        }
     }
+
 }
